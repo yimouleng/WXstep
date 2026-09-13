@@ -1,10 +1,14 @@
 name: Random Cron
+
 on:
   workflow_run:
     workflows: ["刷步数"]
     types:
       - completed
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   repo-sync:
@@ -14,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.STEP_PAT }}
+          token: ${{ github.token }}
       - name: random cron
         run: |
           source cron_convert.sh
